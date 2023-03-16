@@ -15,7 +15,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.movie.title),
+        title: Text(widget.movie.title, 
+        overflow: TextOverflow.ellipsis,),
+      ),
+      body: Column(
+        children: <Widget>[
+          Stack(
+            children: [
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: DecorationImage
+                  (
+                    image: NetworkImage('https://image.tmdb.org/t/p/original/'+widget.movie.backDrop!),
+                  )
+                ),
+              ),
+            ],
+          ), 
+        ],
       ),
     );
   }
