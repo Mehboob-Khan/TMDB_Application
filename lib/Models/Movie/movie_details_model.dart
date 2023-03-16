@@ -1,3 +1,5 @@
+import '../genres_model.dart';
+
 class MovieDetailsModel {
   final MovieDetails? details;
   final String? error;
