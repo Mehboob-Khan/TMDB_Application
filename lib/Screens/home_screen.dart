@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: _pageController, 
         children: const <Widget>[
-          Center(child: Text('Home')),
+          HomeScreen(),
           Center(child: Text('Favorite')),
         ],
       ),
