@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _controller,
         children: const <Widget>[
           MovieScreen(),
-          
           Center(
             child: Text('Watch list', style: TextStyle(color: Style.textColor)),
           ),

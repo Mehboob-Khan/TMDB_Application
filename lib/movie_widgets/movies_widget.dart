@@ -5,38 +5,55 @@ import '../Models/Movie/movie_model.dart';
 import '../constant/style.dart';
 import '../http/http_request.dart';
 
-
-class GenreMovies extends StatefulWidget {
-  final int genreId; // Add this line
-
-  const GenreMovies({Key? key, required this.genreId}) // Update this line
+class MoviesWidget extends StatefulWidget {
+  const MoviesWidget({Key? key, required this.text, required this.request})
       : super(key: key);
+  final String text;
+  final String request;
 
   @override
-  State<GenreMovies> createState() => _GenreMoviesState();
+  State<MoviesWidget> createState() => _MoviesWidgetState();
 }
-class _GenreMoviesState extends State<GenreMovies> {
+
+class _MoviesWidgetState extends State<MoviesWidget> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<MovieModel>(
-      future: HttpRequest.getDiscoverMovies(widget.genreId),
-      builder: (context, AsyncSnapshot<MovieModel> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data!.error != null &&
-              snapshot.data!.error!.isNotEmpty) {
-            return _buildErrorWidget(snapshot.data!.error);
-          }
-
-          return _buildMoviesByGenreWidget(snapshot.data!);
-        } else if (snapshot.hasError) {
-          return _buildErrorWidget(snapshot.error);
-        } else {
-          return _buildLoadingWidget();
-        }
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 10, top: 20),
+          child: Text(
+            "${widget.text} MOVIES",
+            style: const TextStyle(
+              color: Style.textColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        FutureBuilder<MovieModel>(
+          future: HttpRequest.getMovies(widget.request),
+          builder: (context, AsyncSnapshot<MovieModel> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.error != null &&
+                  snapshot.data!.error!.isNotEmpty) {
+                return _buildErrorWidget(snapshot.data!.error);
+              }
+              return _buildMoviesByGenreWidget(snapshot.data!);
+            } else if (snapshot.hasError) {
+              return _buildErrorWidget(snapshot.error);
+            } else {
+              return _buildLoadingWidget();
+            }
+          },
+        ),
+      ],
     );
   }
-}
 
   Widget _buildLoadingWidget() {
     return Center(
@@ -56,6 +73,7 @@ class _GenreMoviesState extends State<GenreMovies> {
     );
   }
 
+  //display error
   Widget _buildErrorWidget(dynamic error) {
     return Center(
       child: Column(
@@ -73,7 +91,7 @@ class _GenreMoviesState extends State<GenreMovies> {
     );
   }
 
-Widget _buildMoviesByGenreWidget(MovieModel data) {
+  Widget _buildMoviesByGenreWidget(MovieModel data) {
   List<Movie>? movies = data.movies;
   if (movies!.isEmpty) {
     return const SizedBox(
@@ -196,4 +214,5 @@ Widget _buildMoviesByGenreWidget(MovieModel data) {
       ),
     );
   }
+}
 }
