@@ -1,76 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import '../Models/Movie/movie_model.dart';
 import '../http/http_request.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => MovieModelProvider(),
-      child: MyApp(),
-    ),
-  );
-}
 
-class MyApp extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
-    );
-  }
+  State<HomeScreen> createState() => _HomeScreenState();
 }
-
-class HomeScreen extends StatelessWidget {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
-      body: Consumer<MovieModelProvider>(
-        builder: (context, model, child) {
-          if (model.movies != null) {
-            return _buildContentWidget(model.movies!);
-          } else {
-            return const Center(child: CircularProgressIndicator());
+      body: FutureBuilder<MovieModel>(
+        future: HttpRequest.getMovies("popular"),
+        builder: (BuildContext context, AsyncSnapshot<MovieModel> snapshot) {
+          if (snapshot.hasData) {
+            return _buildContentWidget(snapshot.data);
           }
+          return Container();
         },
       ),
     );
   }
-
-  Widget _buildContentWidget(List<Movie> movies) {
-    return ListView.builder(
-      itemCount: movies.length,
-      itemBuilder: (context, index) {
-        final movie = movies[index];
-        return ListTile(
-          title: Text(movie.title),
-          leading: CachedNetworkImage(
-            imageUrl: 'https://image.tmdb.org/t/p/w92${movie.poster}',
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          ),
-        );
-      },
+  Widget _buildContentWidget(MovieModel? movies) {
+    return Container(
+      child: Center(
+        child: Text("${movies!.movies![0].title}"),
+      ),
     );
-  }
-}
-
-class MovieModelProvider extends ChangeNotifier {
-  List<Movie>? _movies;
-
-  MovieModelProvider() {
-    _loadMovies();
-  }
-
-  List<Movie>? get movies => _movies;
-
-  Future<void> _loadMovies() async {
-    final response = await HttpRequest.getMovies("popular");
-    _movies = response.movies;
-    notifyListeners();
   }
 }
