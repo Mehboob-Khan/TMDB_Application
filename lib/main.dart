@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'package:tmdb_application/constant/style.dart';
 import 'Screens/home_screen.dart';
+
 
 Future<void> main() async {
   await dotenv.load();
@@ -14,10 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Movie App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Style.primaryColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Style.primaryColor,
+            elevation: 0,
+          ),
         ),
-        home: HomeScreen());
+        home: const HomeScreen());
   }
 }
