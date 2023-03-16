@@ -21,21 +21,51 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       body: Column(
         children: <Widget>[
           Stack(
-            children: [
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: DecorationImage
-                  (
-                    image: NetworkImage('https://image.tmdb.org/t/p/original/'+widget.movie.backDrop!),
-                  )
-                ),
-              ),
+            clipBehavior: Clip.none, children: [
+              _buildBackDrop(),
+              
+              Positioned
+              (
+                top: 150,
+                left: 30,
+                child: _buildPoster(),
+              )
+
             ],
           ), 
         ],
       ),
     );
+  }
+
+  Widget _buildPoster() {
+    return Container(
+                width: 120,
+                height: 180,
+                decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: DecorationImage
+                (
+                  image: NetworkImage('https://image.tmdb.org/t/p/w200/'+widget.movie.backDrop!
+                  ),
+                  fit: BoxFit.cover,
+                )
+              ),
+              );
+  }
+
+  Widget _buildBackDrop() {
+    return Container(
+              height: 200,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: DecorationImage
+                (
+                  image: NetworkImage('https://image.tmdb.org/t/p/original/'+widget.movie.backDrop!
+                  ),
+                  fit: BoxFit.cover,
+                )
+              ),
+            );
   }
 }
