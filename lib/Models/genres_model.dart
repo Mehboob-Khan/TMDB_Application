@@ -5,13 +5,14 @@ class GenreModel {
   GenreModel({this.genres, this.error});
 
   factory GenreModel.fromJson(Map<String, dynamic> json) {
-    return GenreModel(
-      genres: json['genres']
-          .map<Genre>((genre) => Genre.fromJson(genre))
-          .toList(),
-      error: "",
-    );
-  }
+  return GenreModel(
+    genres: (json['genres'] as List)
+        .map<Genre>((genre) => Genre.fromJson(genre as Map<String, dynamic>))
+        .toList(),
+    error: "",
+  );
+}
+
 
   factory GenreModel.withError(String error) {
     return GenreModel(
