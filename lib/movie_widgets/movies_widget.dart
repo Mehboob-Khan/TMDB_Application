@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:tmdb_application/Screens/movie_details_screen.dart';
 
 import '../Models/Movie/movie_model.dart';
 import '../constant/style.dart';
@@ -119,6 +120,7 @@ class _MoviesWidgetState extends State<MoviesWidget> {
             ),
             child: GestureDetector(
               onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => MovieDetailsScreen(movie: movies[index])));
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

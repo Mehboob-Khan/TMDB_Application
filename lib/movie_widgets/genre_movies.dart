@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../Models/Movie/movie_model.dart';
+import '../Screens/movie_details_screen.dart';
 import '../constant/style.dart';
 import '../http/http_request.dart';
 
@@ -101,6 +102,7 @@ Widget _buildMoviesByGenreWidget(MovieModel data) {
             ),
             child: GestureDetector(
               onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => MovieDetailsScreen(movie: movies[index])));
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
