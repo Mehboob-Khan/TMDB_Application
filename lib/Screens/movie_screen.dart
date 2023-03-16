@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdb_application/movie_widgets/get_genres.dart';
 import 'package:tmdb_application/movie_widgets/now_playing_widget.dart';
 
 import '../constant/style.dart';
@@ -16,7 +17,7 @@ class _MovieScreenState extends State<MovieScreen> {
     return ListView(
       children: [
         NowPlaying(),
-        Text('Genre', style: TextStyle(color: Style.textColor)),
+        GetGenres(),
         Text('Upcoming', style: TextStyle(color: Style.textColor)),
         Text('Popular', style: TextStyle(color: Style.textColor)),
         Text('Top Rated', style: TextStyle(color: Style.textColor)),
