@@ -15,24 +15,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.movie.title, 
-        overflow: TextOverflow.ellipsis,),
+        title: Text(
+          widget.movie.title,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       body: Column(
         children: <Widget>[
           Stack(
-            clipBehavior: Clip.none, children: [
+            clipBehavior: Clip.none,
+            children: [
               _buildBackDrop(),
-              
-              Positioned
-              (
+              Positioned(
                 top: 150,
                 left: 30,
-                child: _buildPoster(),
+                child: Hero(
+                  tag: "${widget.movie.id}",
+                  child: _buildPoster()),
               )
-
             ],
-          ), 
+          ),
         ],
       ),
     );
@@ -40,32 +42,28 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   Widget _buildPoster() {
     return Container(
-                width: 120,
-                height: 180,
-                decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                image: DecorationImage
-                (
-                  image: NetworkImage('https://image.tmdb.org/t/p/w200/'+widget.movie.backDrop!
-                  ),
-                  fit: BoxFit.cover,
-                )
-              ),
-              );
+      width: 120,
+      height: 180,
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://image.tmdb.org/t/p/w200/' + widget.movie.backDrop!),
+            fit: BoxFit.cover,
+          )),
+    );
   }
 
   Widget _buildBackDrop() {
     return Container(
-              height: 200,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                image: DecorationImage
-                (
-                  image: NetworkImage('https://image.tmdb.org/t/p/original/'+widget.movie.backDrop!
-                  ),
-                  fit: BoxFit.cover,
-                )
-              ),
-            );
+      height: 200,
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          image: DecorationImage(
+            image: NetworkImage('https://image.tmdb.org/t/p/original/' +
+                widget.movie.backDrop!),
+            fit: BoxFit.cover,
+          )),
+    );
   }
 }

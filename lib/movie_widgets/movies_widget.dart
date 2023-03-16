@@ -142,21 +142,24 @@ class _MoviesWidgetState extends State<MoviesWidget> {
                             ),
                           ),
                         )
-                      : Container(
-                          width: 120,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            color: Style.secondColor,
-                            borderRadius: const BorderRadius.all(Radius.circular(2)),
-                            shape: BoxShape.rectangle,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://image.tmdb.org/t/p/w200/" +
-                                      movies[index].poster!),
-                              fit: BoxFit.cover,
+                      : Hero(
+                          tag: "${widget.text}${movies[index].id}",
+                        child: Container(
+                            width: 120,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              color: Style.secondColor,
+                              borderRadius: const BorderRadius.all(Radius.circular(2)),
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://image.tmdb.org/t/p/w200/" +
+                                        movies[index].poster!),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
+                      ),
 
                   const SizedBox(
                     height: 10,
