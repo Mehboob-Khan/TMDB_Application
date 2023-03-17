@@ -96,30 +96,31 @@ class _MovieInfoState extends State<MovieInfo> {
             "GENRES",
             style: TextStyle(
               color: Style.textColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
           ),
           Container(
             height: 35,
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 10),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: genres?.length ?? 0,
+              itemCount: genres!.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Container(
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      border: Border.all(width: 1, color: Style.secondColor),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.white),
                     ),
                     child: Text(
-                      genres![index].name!,
+                      genres[index].name!,
                       style: const TextStyle(
-                        color: Style.secondColor,
-                        fontSize: 10,
+                        color: Colors.white,
                         fontWeight: FontWeight.w300,
+                        fontSize: 9,
                       ),
                     ),
                   ),
@@ -134,18 +135,20 @@ class _MovieInfoState extends State<MovieInfo> {
 
   Widget _buildOverview(String? overview) {
     return Padding(
-        padding: const EdgeInsets.only(
-          top: 20,
-          bottom: 10,
-          left: 10,
-          right: 10,
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      padding: const EdgeInsets.only(
+        top: 20,
+        bottom: 10,
+        left: 10,
+        right: 10,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           const Text(
             "OVERVIEW",
             style: TextStyle(
               color: Style.textColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
           ),
@@ -155,12 +158,14 @@ class _MovieInfoState extends State<MovieInfo> {
           Text(
             overview!,
             style: const TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               fontSize: 12,
               height: 1.5,
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget _buildRating(MovieDetails details) {
@@ -201,15 +206,15 @@ class _MovieInfoState extends State<MovieInfo> {
                           allowHalfRating: true,
                           itemCount: 5,
                           itemPadding:
-                              const EdgeInsets.symmetric(horizontal: 2.0),
+                              const EdgeInsets.symmetric(horizontal: 2),
                           itemBuilder: (context, _) {
                             return const Icon(
                               Icons.star,
-                              color: Colors.amber,
+                              color: Style.secondColor,
                             );
                           },
                           onRatingUpdate: (rating) {},
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -225,9 +230,12 @@ class _MovieInfoState extends State<MovieInfo> {
                               "DURATION",
                               style: TextStyle(
                                 color: Style.textColor,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Text(
                               '${details.runtime!} mins',
@@ -237,16 +245,21 @@ class _MovieInfoState extends State<MovieInfo> {
                                 fontSize: 12,
                               ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
                             const Text(
                               "RELEASE DATE",
                               style: TextStyle(
                                 color: Style.textColor,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Text(
                               '${details.releaseDate!}',
