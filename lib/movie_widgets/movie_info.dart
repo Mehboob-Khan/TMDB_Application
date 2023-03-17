@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:tmdb_application/Models/Movie/movie_details_model.dart';
+import '../Models/genres_model.dart';
 import '../constant/style.dart';
 import '../http/http_request.dart';
 
@@ -80,7 +81,55 @@ class _MovieInfoState extends State<MovieInfo> {
       const SizedBox(
         height: 10,
       ),
+      // build genres list
+      _buildGenresList(details.genres),
     ]);
+  }
+
+  Widget _buildGenresList(List<Genre>? genres) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "GENRES",
+            style: TextStyle(
+              color: Style.textColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+            ),
+          ),
+          Container(
+            height: 35,
+            padding: const EdgeInsets.only(top: 20),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: genres?.length ?? 0,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      border: Border.all(width: 1, color: Style.secondColor),
+                    ),
+                    child: Text(
+                      genres![index].name!,
+                      style: const TextStyle(
+                        color: Style.secondColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildOverview(String? overview) {
