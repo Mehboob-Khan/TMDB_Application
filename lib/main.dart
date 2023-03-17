@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tmdb_application/constant/style.dart';
+import 'Models/Movie/hive_movie_model.dart';
 import 'Screens/home_screen.dart';
 
 
 Future<void> main() async {
   await dotenv.load();
+  await Hive.initFlutter();
+  Hive.registerAdapter(HiveMovieModelAdapter());
+  await Hive.openBox<HiveMovieModel>('movie_lists');
   runApp(const MyApp());
 }
 

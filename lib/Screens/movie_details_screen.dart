@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:tmdb_application/Models/Movie/hive_movie_model.dart';
 import 'package:tmdb_application/Screens/trailer_screen.dart';
 import 'package:tmdb_application/movie_widgets/movie_info.dart';
 
@@ -14,6 +16,14 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  late Box<HiveMovieModel> _movieWatchLists;
+  @override
+  void initState() {
+    _movieWatchLists = Hive.box<HiveMovieModel>('movie_lists');
+    super.initState();
+  }
+
+  @override
   Widget _buildPoster() {
     return Container(
       width: 120,
@@ -103,7 +113,18 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               child: Container(
                 color: Color.fromARGB(255, 4, 255, 0),
                 child: TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    HiveMovieModel hiveMovieModel = HiveMovieModel(
+                      id: widget.movie.id!,
+                      rating: widget.movie.rating!,
+                      title: widget.movie.title!,
+                      poster: widget.movie.poster!,
+                      backDrop: widget.movie.backDrop!,
+                      overview: widget.movie.overview!,
+                    );
+                    _movieWatchLists.add(hiveMovieModel);
+                    print('Movie added to the watchlist: ${hiveMovieModel.title}');
+                  },
                   icon: const Icon(
                     Icons.play_circle_fill_rounded,
                     size: 30,
