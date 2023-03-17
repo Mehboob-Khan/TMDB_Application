@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdb_application/movie_widgets/movie_info.dart';
 
 import '../Models/Movie/movie_model.dart';
 
@@ -35,6 +36,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               )
             ],
           ),
+          MovieInfo(id: widget.movie.id!)
         ],
       ),
     );
