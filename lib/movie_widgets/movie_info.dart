@@ -72,7 +72,46 @@ class _MovieInfoState extends State<MovieInfo> {
     MovieDetails details = data.details!;
     return Column(children: <Widget>[
       _buildRating(details),
+      const SizedBox(
+        height: 10,
+      ),
+      // _build ovrview
+      _buildOverview(details.overview),
+      const SizedBox(
+        height: 10,
+      ),
     ]);
+  }
+
+  Widget _buildOverview(String? overview) {
+    return Padding(
+        padding: const EdgeInsets.only(
+          top: 20,
+          bottom: 10,
+          left: 10,
+          right: 10,
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text(
+            "OVERVIEW",
+            style: TextStyle(
+              color: Style.textColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            overview!,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 12,
+              height: 1.5,
+            ),
+          ),
+        ]));
   }
 
   Widget _buildRating(MovieDetails details) {
@@ -81,7 +120,7 @@ class _MovieInfoState extends State<MovieInfo> {
       child: Row(
         children: <Widget>[
           const SizedBox(
-            width: 10,
+            width: 120,
           ),
           Expanded(
             child: SizedBox(
@@ -90,8 +129,7 @@ class _MovieInfoState extends State<MovieInfo> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10), // Changed padding here
+                    padding: const EdgeInsets.only(left: 30, top: 20),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -99,7 +137,7 @@ class _MovieInfoState extends State<MovieInfo> {
                           details.rating!.toString(),
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -127,51 +165,49 @@ class _MovieInfoState extends State<MovieInfo> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10), // Changed padding here
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        const Text(
-                          "DURATION",
-                          style: TextStyle(
-                            color: Style.textColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '${details.runtime!} mins',
-                          style: const TextStyle(
-                            color: Style.secondColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "RELEASE DATE",
-                          style: TextStyle(
-                            color: Style.textColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '${details.releaseDate!}',
-                          style: const TextStyle(
-                            color: Style.secondColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            const Text(
+                              "DURATION",
+                              style: TextStyle(
+                                color: Style.textColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              '${details.runtime!} mins',
+                              style: const TextStyle(
+                                color: Style.secondColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            const Text(
+                              "RELEASE DATE",
+                              style: TextStyle(
+                                color: Style.textColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              '${details.releaseDate!}',
+                              style: const TextStyle(
+                                color: Style.secondColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
