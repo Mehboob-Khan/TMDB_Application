@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tmdb_application/movie_widgets/movie_info.dart';
+import 'package:tmdb_application/movie_widgets/similar_movie_widget.dart';
 
 import '../Models/Movie/movie_model.dart';
 
@@ -21,23 +22,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           overflow: TextOverflow.ellipsis,
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              _buildBackDrop(),
-              Positioned(
-                top: 150,
-                left: 30,
-                child: Hero(
-                  tag: "${widget.movie.id}",
-                  child: _buildPoster()),
-              )
-            ],
-          ),
-          MovieInfo(id: widget.movie.id!)
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                _buildBackDrop(),
+                Positioned(
+                  top: 150,
+                  left: 30,
+                  child: Hero(
+                    tag: "${widget.movie.id}",
+                    child: _buildPoster()),
+                )
+              ],
+            ),
+            MovieInfo(id: widget.movie.id!),
+            SimilarMovies(id: widget.movie.id!),
+          ],
+        ),
       ),
     );
   }
