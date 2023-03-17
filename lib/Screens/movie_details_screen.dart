@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdb_application/Screens/trailer_screen.dart';
 import 'package:tmdb_application/movie_widgets/movie_info.dart';
 
 import '../Models/Movie/movie_model.dart';
@@ -13,6 +14,33 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  Widget _buildPoster() {
+    return Container(
+      width: 120,
+      height: 180,
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://image.tmdb.org/t/p/w200/' + widget.movie.backDrop!),
+            fit: BoxFit.cover,
+          )),
+    );
+  }
+
+  Widget _buildBackDrop() {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          image: DecorationImage(
+            image: NetworkImage('https://image.tmdb.org/t/p/original/' +
+                widget.movie.backDrop!),
+            fit: BoxFit.cover,
+          )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +81,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               child: Container(
                 color: Colors.redAccent,
                 child: TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrailersScreen(shows: "movie", id: widget.movie.id)));
+                  },
                   icon: const Icon(
                     Icons.play_circle_fill_rounded,
                     size: 30,
@@ -92,33 +122,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildPoster() {
-    return Container(
-      width: 120,
-      height: 180,
-      decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          image: DecorationImage(
-            image: NetworkImage(
-                'https://image.tmdb.org/t/p/w200/' + widget.movie.backDrop!),
-            fit: BoxFit.cover,
-          )),
-    );
-  }
-
-  Widget _buildBackDrop() {
-    return Container(
-      height: 200,
-      decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          image: DecorationImage(
-            image: NetworkImage('https://image.tmdb.org/t/p/original/' +
-                widget.movie.backDrop!),
-            fit: BoxFit.cover,
-          )),
     );
   }
 }
