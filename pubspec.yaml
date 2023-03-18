@@ -52,6 +52,7 @@ dependencies:
   cloud_firestore: ^4.4.5
   simple_animations: ^5.0.0+3
   supercharged: ^2.1.1
+  sensors: ^2.0.3
 
 dev_dependencies:
   flutter_test:
