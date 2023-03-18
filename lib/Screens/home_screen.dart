@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdb_application/Screens/movie_screen.dart';
-
+import 'package:tmdb_application/firebase/profile.dart';
+import 'package:provider/provider.dart';
 import '../constant/style.dart';
+import '../firebase/UserinfoProvider.dart';
 import '../movie_widgets/movie_watchlist_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  
-
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -34,11 +34,13 @@ class _HomeScreenState extends State<HomeScreen> {
           : null,
       body: PageView(
         controller: _controller,
-        // ignore: prefer_const_literals_to_create_immutables
         children: <Widget>[
           const MovieScreen(),
           const MovieWatchLists(),
-        
+          ChangeNotifierProvider(
+            create: (context) => UserInfoProvider(),
+            child: Profile(),
+          ),
         ],
         onPageChanged: (value) => setState(() {
           _currentIndex = value;
