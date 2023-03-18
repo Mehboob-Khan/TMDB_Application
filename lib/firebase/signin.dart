@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-import 'auth_provider.dart';
-import 'auth_service.dart';
+import 'authprovider.dart';
+import 'func.dart';
 
 class Signin extends StatefulWidget {
   @override
@@ -19,36 +20,35 @@ class _SigninState extends State<Signin> {
   String password = "";
 
   void signin() {
-  bool emailValid = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(email);
-  if (emailValid) {
-    if (password.isNotEmpty && password.trim().length >= 6) {
-      print("$email $password");
-      signIn(email, password);
-      return;
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+    if (emailValid) {
+      if (password.isNotEmpty && password.trim().length >= 6) {
+        print("$email $password");
+        signIn(email, password);
+        return;
+      }
     }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text("Wrong Credentials"),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Error'),
-        content: Text("Wrong Credentials"),
-        actions: <Widget>[
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      );
-    },
-  );
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -166,4 +166,3 @@ class _SigninState extends State<Signin> {
     );
   }
 }
- 

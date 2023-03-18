@@ -1,3 +1,4 @@
+// ... other imports ...
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,9 +22,7 @@ void signUp(String email, String password, String name) async {
         email: email, password: password);
     User? user = result.user;
     print(user);
-    if (user != null) {
-      createUserInFirestore(user, name);
-    }
+    createUserInFirestore(user!, name);
   } catch (e) {
     print(e);
   }
@@ -48,30 +47,4 @@ void createUserInFirestore(User user, String name) async {
   }
 }
 
-User? getCurrentUser() {
-  try {
-    User? user = auth.currentUser;
-    return user;
-  } catch (e) {
-    print(e);
-  }
-
-  return null;
-}
-
-Future<Map?> getDataFromFirestore() async {
-  User? user = getCurrentUser();
-  if (user == null) {
-    print("Error");
-    return null;
-  }
-  try {
-    DocumentSnapshot doc =
-        await firestore.collection("users").doc(user.uid).get();
-    Map? docData = doc.data() as Map?;
-    return docData;
-  } catch (e) {
-    print(e);
-  }
-  return null;
-}
+// ... rest of the code ...

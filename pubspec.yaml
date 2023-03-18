@@ -50,6 +50,8 @@ dependencies:
   firebase_auth: ^4.3.0
   firebase_ui_auth: ^1.1.17
   cloud_firestore: ^4.4.5
+  simple_animations: ^5.0.0+3
+  supercharged: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +83,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
     - assets/images/logo.png
     - assets/images/alucard.jpg
+    - assets/images/Flutter.png
 
 
   fonts:

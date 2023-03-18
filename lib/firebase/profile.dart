@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tmdb_application/auth/userauth.dart';
+import 'UserinfoProvider.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -8,10 +8,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  
-  
   void signout() {
-    FirebaseFunctions.signout();
+    // FirebaseFunctions.signout();
   }
 
   @override
@@ -79,57 +77,13 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Change Password",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black54,
-                size: 20,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          SizedBox(
-            height: 0.5,
-            child: Container(
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Help and Support",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black54,
-                size: 20,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          SizedBox(
-            height: 0.5,
-            child: Container(
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(
             height: 30,
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red,
+              padding: EdgeInsets.symmetric(vertical: 15),
+            ),
             onPressed: signout,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -140,14 +94,7 @@ class _ProfileState extends State<Profile> {
                 )
               ],
             ),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.red,
-              padding: EdgeInsets.symmetric(vertical: 15),
-              textStyle: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          )
+          ),
         ],
       ),
     );

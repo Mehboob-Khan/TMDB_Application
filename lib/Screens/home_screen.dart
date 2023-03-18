@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdb_application/Screens/movie_screen.dart';
-import 'package:tmdb_application/auth/profile_.dart';
 
 import '../constant/style.dart';
 import '../movie_widgets/movie_watchlist_widget.dart';
@@ -39,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           const MovieScreen(),
           const MovieWatchLists(),
-          Profile(),
+        
         ],
         onPageChanged: (value) => setState(() {
           _currentIndex = value;

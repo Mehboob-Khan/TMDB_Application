@@ -5,7 +5,10 @@ import 'package:tmdb_application/constant/style.dart';
 import 'Models/Movie/hive_movie_model.dart';
 import 'Screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'firebase/authWrapper.dart';
+import 'firebase/authprovider.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -20,11 +23,47 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  void checkUser() {
+    auth.authStateChanges().listen((User? user) {
+      setState(() {
+        checking = false;
+      });
+      if (user == null) {
+        setState(() {
+          userFound = false;
+        });
+      } else {
+        setState(() {
+          userFound = true;
+        });
+      }
+    });
+  }
+
+  bool checking = true;
+  bool userFound = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkUser();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: MaterialApp(
         title: 'Movie App',
         theme: ThemeData(
           scaffoldBackgroundColor: Style.primaryColor,
@@ -33,6 +72,12 @@ class MyApp extends StatelessWidget {
             elevation: 0,
           ),
         ),
-        home:  const HomeScreen());
+        home: checking
+            ? Center(child: CircularProgressIndicator())
+            : userFound
+                ? const HomeScreen()
+                : AuthWrapper(),
+      ),
+    );
   }
 }
