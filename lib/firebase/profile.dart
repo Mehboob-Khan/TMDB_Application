@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'UserinfoProvider.dart';
+import 'func.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -8,8 +9,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  void signout() {
-    // FirebaseFunctions.signout();
+  void onSignout() {
+    // Change the method name to 'onSignout'
+    signout(); // Call the signout function from func.dart
   }
 
   @override
@@ -84,7 +86,7 @@ class _ProfileState extends State<Profile> {
               primary: Colors.red,
               padding: EdgeInsets.symmetric(vertical: 15),
             ),
-            onPressed: signout,
+            onPressed: onSignout, // Update the method name here
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

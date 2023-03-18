@@ -1,4 +1,3 @@
-// ... other imports ...
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -47,4 +46,3 @@ void createUserInFirestore(User user, String name) async {
   }
 }
 
-// ... rest of the code ...

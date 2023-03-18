@@ -84,6 +84,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/alucard.jpg
     - assets/images/Flutter.png
+    - assets/images/
 
 
   fonts:
