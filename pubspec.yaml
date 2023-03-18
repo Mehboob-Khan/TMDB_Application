@@ -46,6 +46,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.0
+  firebase_core: ^2.8.0
+  firebase_auth: ^4.3.0
 
 dev_dependencies:
   flutter_test:

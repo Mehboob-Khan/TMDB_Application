@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "18263548565",
+    "project_id": "lustrous-stone-374101",
+    "storage_bucket": "lustrous-stone-374101.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18263548565:android:9816a5cb46c7ee0bbcb19c",
+        "android_client_info": {
+          "package_name": "com.example.tmdb_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18263548565-o3f6slj2923g7j8qq7j87q56fg9dgdno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA32SQ_jbSMbIH-Yz6F8vEtcX3Rzn-dFBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18263548565-o3f6slj2923g7j8qq7j87q56fg9dgdno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
