@@ -10,6 +10,12 @@ import 'package:provider/provider.dart';
 import 'firebase/authWrapper.dart';
 import 'firebase/authprovider.dart';
 import 'firebase_options.dart';
+import 'package:sensors/sensors.dart';
+import 'dart:async';
+import 'dart:math';
+
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +38,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  Color _backgroundColor = Style.primaryColor;
+  StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
 
   void checkUser() {
     auth.authStateChanges().listen((User? user) {
@@ -57,6 +65,26 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     checkUser();
+    _accelerometerSubscription = userAccelerometerEvents.listen((event) {
+      final double shakeThreshold = 15;
+      if (event.x.abs() > shakeThreshold ||
+          event.y.abs() > shakeThreshold ||
+          event.z.abs() > shakeThreshold) {
+        _changeBackgroundColor();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _accelerometerSubscription?.cancel();
+    super.dispose();
+  }
+
+  void _changeBackgroundColor() {
+    setState(() {
+      _backgroundColor = Color(Random().nextInt(0xFFFFFFFF));
+    });
   }
 
   @override
@@ -66,7 +94,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Movie App',
         theme: ThemeData(
-          scaffoldBackgroundColor: Style.primaryColor,
+          scaffoldBackgroundColor: _backgroundColor,
           appBarTheme: const AppBarTheme(
             backgroundColor: Style.primaryColor,
             elevation: 0,
