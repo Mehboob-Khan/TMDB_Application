@@ -48,6 +48,8 @@ dependencies:
   hive_generator: ^2.0.0
   firebase_core: ^2.8.0
   firebase_auth: ^4.3.0
+  firebase_ui_auth: ^1.1.17
+  cloud_firestore: ^4.4.5
 
 dev_dependencies:
   flutter_test:
@@ -75,8 +77,16 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
-  #   - images/a_dot_burr.jpeg
+    - assets/images/profile.png
   #   - images/a_dot_ham.jpeg
+    - assets/images/logo.png
+    - assets/images/alucard.jpg
+
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/images/Nunito.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

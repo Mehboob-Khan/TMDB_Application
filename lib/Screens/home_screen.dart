@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdb_application/Screens/movie_screen.dart';
+import 'package:tmdb_application/auth/profile_.dart';
 
 import '../constant/style.dart';
 import '../movie_widgets/movie_watchlist_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+  
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,9 +17,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    // creatimg a page controller
+    // creating a page controller
     PageController _controller = PageController();
     void onTapIcon(int index) {
       _controller.animateToPage(index,
@@ -23,14 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      appBar: _currentIndex != 1 ? AppBar (
-        title: _buildTitle(_currentIndex),
-      ) : null,
+      appBar: _currentIndex != 2
+          ? AppBar(
+              title: _buildTitle(_currentIndex),
+            )
+          : null,
       body: PageView(
         controller: _controller,
-        children: const <Widget>[
-          MovieScreen(),
-          MovieWatchLists() // Update this line
+        // ignore: prefer_const_literals_to_create_immutables
+        children: <Widget>[
+          const MovieScreen(),
+          const MovieWatchLists(),
+          Profile(),
         ],
         onPageChanged: (value) => setState(() {
           _currentIndex = value;
@@ -51,6 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.list),
             label: 'Watchlist',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
       ),
     );
@@ -62,6 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text('Movie Shows');
       case 1:
         return null;
+      case 2:
+        return const Text('Profile');
       default:
         return null;
     }
