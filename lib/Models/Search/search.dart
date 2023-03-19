@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tmdb_application/Models/Search/searchbarw.dart';
 import 'dart:convert' as convert;
 import 'SearchModel.dart';
+import 'package:tmdb_application/Models/Search/searchbarw.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -14,14 +14,24 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   String current = "movie";
   String query = "";
+  String sortOrder = "popularity.desc";
   List results = [];
 
   void debounce(VoidCallback callback, Duration delay) {
     Timer? _debounceTimer;
     if (_debounceTimer != null) {
-      _debounceTimer?.cancel();
+      _debounceTimer.cancel();
     }
     _debounceTimer = Timer(delay, callback);
+  }
+
+  void updateSortOrder(String? newSortOrder) {
+    if (newSortOrder != null) {
+      setState(() {
+        sortOrder = newSortOrder;
+      });
+      search();
+    }
   }
 
   void search() async {
@@ -30,8 +40,17 @@ class _SearchState extends State<Search> {
     });
     print('$query $current');
 
-    String url =
-        'https://api.themoviedb.org/3/search/$current?api_key=6458ca648b70d6d3d574f8e0b2ce817d&language=en-US&query=$query&append_to_response=credits';
+    String url = '';
+
+    if (query.isEmpty) {
+      url =
+          'https://api.themoviedb.org/3/discover/$current?api_key=6458ca648b70d6d3d574f8e0b2ce817d&language=en-US&sort_by=$sortOrder';
+    } else {
+      url =
+          'https://api.themoviedb.org/3/search/$current?api_key=6458ca648b70d6d3d574f8e0b2ce817d&language=en-US&query=$query';
+    }
+
+    url += '&append_to_response=credits';
     print(url);
 
     try {
@@ -51,6 +70,55 @@ class _SearchState extends State<Search> {
       appBar: AppBar(
         title: Text("Search"),
         backgroundColor: Colors.black,
+        actions: <Widget>[
+          DropdownButton<String>(
+            value: sortOrder,
+            icon: Icon(Icons.sort),
+            iconSize: 24,
+            elevation: 16,
+            underline: Container(
+              height: 2,
+              color: Colors.white,
+            ),
+            onChanged: updateSortOrder,
+            items: <String>[
+              'popularity.desc',
+              'popularity.asc',
+              'vote_average.desc',
+              'vote_average.asc',
+              'primary_release_date.asc',
+              'primary_release_date.desc',
+            ].map<DropdownMenuItem<String>>((String value) {
+              String displayText;
+              switch (value) {
+                case 'popularity.desc':
+                  displayText = 'Most Popular';
+                  break;
+                case 'popularity.asc':
+                  displayText = 'Least Popular';
+                  break;
+                case 'vote_average.desc':
+                  displayText = 'Highest Rated';
+                  break;
+                case 'vote_average.asc':
+                  displayText = 'Lowest Rated';
+                  break;
+                case 'primary_release_date.asc':
+                  displayText = 'Oldest';
+                  break;
+                case 'primary_release_date.desc':
+                  displayText = 'Latest';
+                  break;
+                default:
+                  displayText = value;
+              }
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(displayText),
+              );
+            }).toList(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(

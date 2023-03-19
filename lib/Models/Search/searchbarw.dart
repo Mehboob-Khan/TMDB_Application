@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'custome_cached_image.dart';
+
 class SearchCard extends StatelessWidget {
   final String imageUrl;
   final String language;
@@ -21,21 +23,19 @@ class SearchCard extends StatelessWidget {
     return Card(
       child: Row(
         children: <Widget>[
-          // Replace the Image.network widget with the FadeInImage
           imageUrl.isNotEmpty
-              ? FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/notfound.png',
-                  image: 'https://image.tmdb.org/t/p/w200$imageUrl',
-                  width: 100,
-                  height: 150,
-                  fit: BoxFit.cover,
-                )
-              : Image.asset(
-                  'assets/images/notfound.png',
-                  width: 100,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
+    ? CustomCachedImage(
+  imageUrl: 'https://image.tmdb.org/t/p/w200$imageUrl',
+  width: 100,
+  height: 150,
+)
+    : Image.asset(
+        'assets/images/notfound.png',
+        width: 100,
+        height: 150,
+        fit: BoxFit.cover,
+      ),
+
           SizedBox(
             width: 10,
           ),
@@ -45,7 +45,7 @@ class SearchCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  title ?? "Default",
+                  title.isNotEmpty ? title : "N/A",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -58,7 +58,7 @@ class SearchCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Language : ${language == "en" ? "English" : language ?? "-"}",
+                      "Language : " + (language.isNotEmpty ? (language == "en" ? "English" : language) : "N/A"),
                       style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class SearchCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Release Date : ${releaseDate ?? "-"}",
+                      "Release Date : " + (releaseDate.isNotEmpty ? releaseDate : "N/A"),
                       style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,

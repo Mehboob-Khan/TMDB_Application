@@ -75,12 +75,25 @@ class _TrailersScreenState extends State<TrailersScreen> {
 
   Widget _buildTrailersWidget(TrailersModel data) {
     List<Video>? videos = data.trailers;
+
+    if (videos == null || videos.isEmpty) {
+      return Center(
+        child: Text(
+          'No videos available',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+
     return Stack(
       children: <Widget>[
         Center(
           child: YoutubePlayer(
             controller: YoutubePlayerController(
-              initialVideoId: videos![0].key!,
+              initialVideoId: videos[0].key!,
               flags: const YoutubePlayerFlags(
                 hideControls: true,
                 autoPlay: true,

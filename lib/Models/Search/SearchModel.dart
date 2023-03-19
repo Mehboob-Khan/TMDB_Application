@@ -53,12 +53,12 @@ class _SearchModelState extends State<SearchModel> {
         title: loading
             ? Text("Loading...")
             : Text(
-                movie.title,
+                movie.title ?? "N/A",
                 overflow: TextOverflow.ellipsis,
               ),
       ),
       body: loading
-          ? CircularProgressIndicator()
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -72,7 +72,7 @@ class _SearchModelState extends State<SearchModel> {
                             image: DecorationImage(
                               image: NetworkImage(
                                   'https://image.tmdb.org/t/p/original/' +
-                                      movie.backDrop!),
+                                      (movie.backDrop ?? '')),
                               fit: BoxFit.cover,
                             )),
                       ),
@@ -89,7 +89,8 @@ class _SearchModelState extends State<SearchModel> {
                                 image: DecorationImage(
                                   image: NetworkImage(
                                       'https://image.tmdb.org/t/p/w200/' +
-                                          movie.backDrop!),
+                                          (movie.poster ??
+                                              '')), // Use movie.poster here
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -97,8 +98,8 @@ class _SearchModelState extends State<SearchModel> {
                       ),
                     ],
                   ),
-                  MovieInfo(id: movie.id!),
-                  SimilarMovies(id: movie.id!),
+                  MovieInfo(id: movie.id ?? 0),
+                  SimilarMovies(id: movie.id ?? 0),
                 ],
               ),
             ),

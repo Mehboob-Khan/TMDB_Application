@@ -10,14 +10,11 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   void onSignout() {
-    // Change the method name to 'onSignout'
-    signout(); // Call the signout function from func.dart
+    signout();
   }
 
   @override
   Widget build(BuildContext context) {
-    String name =
-        Provider.of<UserInfoProvider>(context, listen: false).userName;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       child: Column(
@@ -39,10 +36,12 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             height: 30,
           ),
-          Center(
-            child: Text(
-              "Hi, $name",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          Consumer<UserInfoProvider>(
+            builder: (context, userInfoProvider, _) => Center(
+              child: Text(
+                "Hi, ${userInfoProvider.userName}",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
             ),
           ),
           SizedBox(
