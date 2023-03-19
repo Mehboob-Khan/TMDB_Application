@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdb_application/Screens/movie_screen.dart';
 import 'package:tmdb_application/firebase/profile.dart';
 import 'package:provider/provider.dart';
+import '../Models/Search/search.dart';
 import '../constant/style.dart';
 import '../firebase/UserinfoProvider.dart';
 import '../movie_widgets/movie_watchlist_widget.dart';
@@ -27,25 +27,26 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      appBar: _currentIndex != 2
+      appBar: _currentIndex != 3
           ? AppBar(
               title: _buildTitle(_currentIndex),
             )
           : null,
       body: PageView(
-        controller: _controller,
-        children: <Widget>[
-          const MovieScreen(),
-          const MovieWatchLists(),
-          ChangeNotifierProvider(
-            create: (context) => UserInfoProvider(),
-            child: Profile(),
-          ),
-        ],
-        onPageChanged: (value) => setState(() {
-          _currentIndex = value;
-        }),
-      ),
+  controller: _controller,
+  children: <Widget>[
+    const MovieScreen(),
+    const MovieWatchLists(),
+    Search(), // Add this line for the search page
+    ChangeNotifierProvider(
+      create: (context) => UserInfoProvider(),
+      child: Profile(),
+    ),
+  ],
+  onPageChanged: (value) => setState(() {
+    _currentIndex = value;
+  }),
+),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Style.primaryColor,
         selectedItemColor: Style.secondColor,
@@ -60,6 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Watchlist',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search Bar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -77,6 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         return null;
       case 2:
+        return const Text('Search Bar');
+      case 3:
         return const Text('Profile');
       default:
         return null;

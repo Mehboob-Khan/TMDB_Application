@@ -53,6 +53,7 @@ dependencies:
   simple_animations: ^5.0.0+3
   supercharged: ^2.1.1
   sensors: ^2.0.3
+  oauth2: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -79,13 +80,18 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - .env
-    - assets/images/profile.png
-  #   - images/a_dot_ham.jpeg
-    - assets/images/logo.png
-    - assets/images/alucard.jpg
-    - assets/images/Flutter.png
-    - assets/images/
+  - .env
+  - assets/images/profile.png
+  - assets/images/logo.png
+  - assets/images/alucard.jpg
+  - assets/images/Flutter.png
+  - assets/images/notfound.png
+  - assets/images/film-poster-placeholder.png
+  - assets/images/placeholder.png
+  - assets/images/signin.png
+  - assets/images/signup.png
+
+
 
 
   fonts:
