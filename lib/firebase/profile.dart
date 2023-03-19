@@ -9,6 +9,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  // Method to handle sign-out action.
   void onSignout() {
     signout();
   }
@@ -36,6 +37,7 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             height: 30,
           ),
+          // Display user name from UserInfoProvider.
           Consumer<UserInfoProvider>(
             builder: (context, userInfoProvider, _) => Center(
               child: Text(
@@ -47,12 +49,7 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             height: 20,
           ),
-          SizedBox(
-            height: 0.5,
-            child: Container(
-              color: Colors.grey,
-            ),
-          ),
+          Divider(color: Colors.grey),
           SizedBox(
             height: 15,
           ),
@@ -71,21 +68,17 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             height: 15,
           ),
-          SizedBox(
-            height: 0.5,
-            child: Container(
-              color: Colors.grey,
-            ),
-          ),
+          Divider(color: Colors.grey),
           SizedBox(
             height: 30,
           ),
+          // Sign-out button.
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.red,
               padding: EdgeInsets.symmetric(vertical: 15),
             ),
-            onPressed: onSignout, // Update the method name here
+            onPressed: onSignout, // Call sign-out method when pressed
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

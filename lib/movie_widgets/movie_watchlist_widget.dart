@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../Models/Movie/hive_movie_model.dart';
-import '../Models/Movie/movie_model.dart';
-import '../Screens/movie_details_screen.dart';
 import '../constant/style.dart';
 
 class MovieWatchLists extends StatefulWidget {

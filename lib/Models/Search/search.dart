@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'SearchModel.dart';
-import 'package:tmdb_application/Models/Search/searchbarw.dart';
+import 'package:tmdb_application/Models/Search/searchCard.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -16,11 +16,11 @@ class _SearchState extends State<Search> {
   String query = "";
   String sortOrder = "popularity.desc";
   List results = [];
+  Timer? _debounceTimer;
 
   void debounce(VoidCallback callback, Duration delay) {
-    Timer? _debounceTimer;
     if (_debounceTimer != null) {
-      _debounceTimer.cancel();
+      _debounceTimer!.cancel();
     }
     _debounceTimer = Timer(delay, callback);
   }
@@ -34,7 +34,7 @@ class _SearchState extends State<Search> {
     }
   }
 
-  void search() async {
+  Future<void> search() async {
     setState(() {
       results = [];
     });
@@ -55,16 +55,30 @@ class _SearchState extends State<Search> {
 
     try {
       var response = await http.get(Uri.parse(url));
-      var jsonResponse = convert.jsonDecode(response.body);
-      setState(() {
-        results = jsonResponse['results'];
-      });
+      if (response.statusCode == 200) {
+        var jsonResponse = convert.jsonDecode(response.body);
+        setState(() {
+          results = jsonResponse['results'];
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
     } catch (e) {
       print(e);
+      // Show a snackbar with the error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: Failed to load data')),
+      );
     }
   }
 
   @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -191,3 +205,4 @@ class _SearchState extends State<Search> {
     );
   }
 }
+

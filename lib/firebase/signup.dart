@@ -19,10 +19,14 @@ class _SignupState extends State<Signup> {
   String password = "";
   String confirmPassword = "";
 
+  // Sign up process
   void signup() {
+    // Validate email
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
+
+    // Check if inputs are valid
     if (emailValid && name.isNotEmpty) {
       if (password.isNotEmpty &&
           confirmPassword.isNotEmpty &&
@@ -35,12 +39,13 @@ class _SignupState extends State<Signup> {
       }
     }
 
+    // Show error dialog if inputs are not valid
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error'),
-          content: Text("Wrong Credentials"),
+          content: Text("Invalid credentials"),
           actions: <Widget>[
             TextButton(
               child: Text('OK'),

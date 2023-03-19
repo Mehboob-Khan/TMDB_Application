@@ -15,12 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late int _currentIndex = 0;
+  int _currentIndex = 0;
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
-    // creating a page controller
-    PageController _controller = PageController();
     void onTapIcon(int index) {
       _controller.animateToPage(index,
           duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
@@ -33,20 +32,21 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : null,
       body: PageView(
-  controller: _controller,
-  children: <Widget>[
-    const MovieScreen(),
-    const MovieWatchLists(),
-    Search(), // Add this line for the search page
-    ChangeNotifierProvider(
-      create: (context) => UserInfoProvider(),
-      child: Profile(),
-    ),
-  ],
-  onPageChanged: (value) => setState(() {
-    _currentIndex = value;
-  }),
-),
+        controller: _controller,
+        children: <Widget>[
+          const MovieScreen(),
+          const MovieWatchLists(),
+          Search(),
+          //CinemasPage(), // Add this line for the nearby theaters screen
+          ChangeNotifierProvider(
+            create: (context) => UserInfoProvider(),
+            child: Profile(),
+          ),
+        ],
+        onPageChanged: (value) => setState(() {
+          _currentIndex = value;
+        }),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Style.primaryColor,
         selectedItemColor: Style.secondColor,
@@ -64,7 +64,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Search Bar',
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.theaters), // Update the icon here
+            label: 'Nearby Theaters', // Update the label here
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -75,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _buildTitle(int _index) {
+  Widget? _buildTitle(int _index) {
     switch (_index) {
       case 0:
         return const Text('Movie Shows');
@@ -84,6 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return const Text('Search Bar');
       case 3:
+        return const Text('Nearby Theaters'); // Update this line
+      case 4:
         return const Text('Profile');
       default:
         return null;

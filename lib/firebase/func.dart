@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
 
+// Sign in user with email and password.
 void signIn(String email, String password) async {
   try {
     UserCredential result =
@@ -15,6 +16,7 @@ void signIn(String email, String password) async {
   }
 }
 
+// Sign up user with email, password and name.
 void signUp(String email, String password, String name) async {
   try {
     UserCredential result = await auth.createUserWithEmailAndPassword(
@@ -27,6 +29,7 @@ void signUp(String email, String password, String name) async {
   }
 }
 
+// Sign out the current user.
 void signout() async {
   try {
     await auth.signOut();
@@ -35,6 +38,7 @@ void signout() async {
   }
 }
 
+// Create user document in Firestore with email and name.
 void createUserInFirestore(User user, String name) async {
   try {
     await firestore.collection('users').doc(user.uid).set({
@@ -45,4 +49,3 @@ void createUserInFirestore(User user, String name) async {
     print(e);
   }
 }
-

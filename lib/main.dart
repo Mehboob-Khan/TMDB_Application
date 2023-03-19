@@ -15,8 +15,6 @@ import 'dart:async';
 import 'dart:math';
 
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
