@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../Models/Movie/hive_movie_model.dart';
 import '../constant/style.dart';
 

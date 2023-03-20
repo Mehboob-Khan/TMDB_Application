@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -8,10 +7,7 @@ import 'SearchModel.dart';
 import 'package:tmdb_application/Models/Search/searchbarw.dart';
 
 class Search extends StatefulWidget {
-  const Search({super.key});
-
   @override
-  // ignore: library_private_types_in_public_api
   _SearchState createState() => _SearchState();
 }
 
@@ -22,11 +18,11 @@ class _SearchState extends State<Search> {
   List results = [];
 
   void debounce(VoidCallback callback, Duration delay) {
-    Timer? debounceTimer;
-    if (debounceTimer != null) {
-      debounceTimer.cancel();
+    Timer? _debounceTimer;
+    if (_debounceTimer != null) {
+      _debounceTimer.cancel();
     }
-    debounceTimer = Timer(delay, callback);
+    _debounceTimer = Timer(delay, callback);
   }
 
   void updateSortOrder(String? newSortOrder) {
@@ -42,9 +38,7 @@ class _SearchState extends State<Search> {
     setState(() {
       results = [];
     });
-    if (kDebugMode) {
-      print('$query $current');
-    }
+    print('$query $current');
 
     String url = '';
 
@@ -57,9 +51,7 @@ class _SearchState extends State<Search> {
     }
 
     url += '&append_to_response=credits';
-    if (kDebugMode) {
-      print(url);
-    }
+    print(url);
 
     try {
       var response = await http.get(Uri.parse(url));
@@ -68,9 +60,7 @@ class _SearchState extends State<Search> {
         results = jsonResponse['results'];
       });
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
     }
   }
 
@@ -78,12 +68,12 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Search"),
+        title: Text("Search"),
         backgroundColor: Colors.black,
         actions: <Widget>[
           DropdownButton<String>(
             value: sortOrder,
-            icon: const Icon(Icons.sort),
+            icon: Icon(Icons.sort),
             iconSize: 24,
             elevation: 16,
             underline: Container(
@@ -139,11 +129,11 @@ class _SearchState extends State<Search> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      const SizedBox(
+                      SizedBox(
                         width: 20,
                       ),
-                      const Icon(Icons.search),
-                      const SizedBox(
+                      Icon(Icons.search),
+                      SizedBox(
                         width: 20,
                       ),
                       Expanded(
@@ -152,10 +142,10 @@ class _SearchState extends State<Search> {
                             setState(() {
                               query = val;
                             });
-                            debounce(search, const Duration(milliseconds: 500));
+                            debounce(search, Duration(milliseconds: 500));
                           },
                           onEditingComplete: search,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               hintText: "What would you like to watch?",
                               border: InputBorder.none),
                         ),
