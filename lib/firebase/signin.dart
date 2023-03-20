@@ -127,40 +127,30 @@ class _SigninState extends State<Signin> {
                 height: 20,
               ),
               Center(
-                child: ElevatedButton(
-                  onPressed: signin,
-                  child: Text(
-                    "Log in",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                child: GestureDetector(
+                  key: Key('signup_tap'), // Add this line
+                  onTap: () {
+                    Provider.of<AuthProvider>(context, listen: false).change();
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      style: defaultStyle,
+                      children: <TextSpan>[
+                        TextSpan(text: "Don't have an account? "),
+                        TextSpan(
+                          text: 'Sign up',
+                          style: linkStyle,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Provider.of<AuthProvider>(context, listen: false)
+                                  .change();
+                            },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    style: defaultStyle,
-                    children: <TextSpan>[
-                      TextSpan(text: "Don't have an account? "),
-                      TextSpan(
-                        text: 'Sign up',
-                        style: linkStyle,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Provider.of<AuthProvider>(context, listen: false)
-                                .change();
-                          },
-                      ),
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),

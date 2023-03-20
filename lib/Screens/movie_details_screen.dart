@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:tmdb_application/Models/Movie/hive_movie_model.dart';
@@ -23,7 +24,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     super.initState();
   }
 
-  @override
   Widget _buildPoster() {
     return Container(
       width: 120,
@@ -44,8 +44,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           image: DecorationImage(
-            image: NetworkImage('https://image.tmdb.org/t/p/original/' +
-                widget.movie.backDrop!),
+            image: NetworkImage('https://image.tmdb.org/t/p/original/${widget.movie.backDrop!}'),
             fit: BoxFit.cover,
           )),
     );
@@ -111,7 +110,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 4, 255, 0),
+                color: const Color.fromARGB(255, 4, 255, 0),
                 child: TextButton.icon(
                   onPressed: () {
                     HiveMovieModel hiveMovieModel = HiveMovieModel(
@@ -123,7 +122,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       overview: widget.movie.overview!,
                     );
                     _movieWatchLists.add(hiveMovieModel);
-                    print('Movie added to the watchlist: ${hiveMovieModel.title}');
+                    if (kDebugMode) {
+                      print('Movie added to the watchlist: ${hiveMovieModel.title}');
+                    }
                   },
                   icon: const Icon(
                     Icons.play_circle_fill_rounded,

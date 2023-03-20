@@ -20,9 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // creating a page controller
-    PageController _controller = PageController();
+    PageController controller = PageController();
     void onTapIcon(int index) {
-      _controller.animateToPage(index,
+      controller.animateToPage(index,
           duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
     }
 
@@ -33,11 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : null,
       body: PageView(
-  controller: _controller,
+  controller: controller,
   children: <Widget>[
     const MovieScreen(),
     const MovieWatchLists(),
-    Search(), // Add this line for the search page
+    const Search(), // Add this line for the search page
     ChangeNotifierProvider(
       create: (context) => UserInfoProvider(),
       child: Profile(),

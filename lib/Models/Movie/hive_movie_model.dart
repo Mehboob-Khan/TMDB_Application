@@ -24,4 +24,8 @@ class HiveMovieModel {
     required this.poster,
     required this.overview,
   });
+
+  HiveMovieModel? get(int key) {
+    return null;
+  }
 }

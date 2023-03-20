@@ -36,7 +36,7 @@ class SearchCard extends StatelessWidget {
         fit: BoxFit.cover,
       ),
 
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Expanded(
@@ -46,63 +46,63 @@ class SearchCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title.isNotEmpty ? title : "N/A",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Language : " + (language.isNotEmpty ? (language == "en" ? "English" : language) : "N/A"),
-                      style: TextStyle(
+                      "Language : ${language.isNotEmpty ? (language == "en" ? "English" : language) : "N/A"}",
+                      style: const TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
                           fontSize: 12),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Average Vote : ",
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 12),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.star,
                           color: Colors.yellow,
                           size: 16,
                         ),
                         Text(
                           votes,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 12),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "Release Date : " + (releaseDate.isNotEmpty ? releaseDate : "N/A"),
-                      style: TextStyle(
+                      "Release Date : ${releaseDate.isNotEmpty ? releaseDate : "N/A"}",
+                      style: const TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
                           fontSize: 12),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
               ],

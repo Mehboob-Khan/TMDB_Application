@@ -262,7 +262,7 @@ class _MovieInfoState extends State<MovieInfo> {
                               height: 10,
                             ),
                             Text(
-                              '${details.releaseDate!}',
+                              details.releaseDate!,
                               style: const TextStyle(
                                 color: Style.secondColor,
                                 fontWeight: FontWeight.bold,

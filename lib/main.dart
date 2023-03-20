@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tmdb_application/constant/style.dart';
-import 'Models/Movie/hive_movie_model.dart';
-import 'Screens/home_screen.dart';
+import 'package:tmdb_application/hive_handler.dart';
+import 'package:tmdb_application/Screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'firebase/authWrapper.dart';
-import 'firebase/authprovider.dart';
-import 'firebase_options.dart';
-import 'package:sensors/sensors.dart';
-import 'dart:async';
-import 'dart:math';
+import 'package:tmdb_application/firebase/authWrapper.dart';
+import 'package:tmdb_application/firebase/authprovider.dart';
+import 'package:tmdb_application/firebase_options.dart';
 
-
-
+import 'accelerometer_handler.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +18,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await dotenv.load();
-  await Hive.initFlutter();
-  Hive.registerAdapter(HiveMovieModelAdapter());
-  await Hive.openBox<HiveMovieModel>('movie_lists');
+  await HiveHandler.initHive();
   runApp(const MyApp());
 }
 
@@ -33,13 +26,14 @@ class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   FirebaseAuth auth = FirebaseAuth.instance;
   Color _backgroundColor = Style.primaryColor;
-  StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
+  AccelerometerHandler? _accelerometerHandler;
 
   void checkUser() {
     auth.authStateChanges().listen((User? user) {
@@ -65,26 +59,17 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     checkUser();
-    _accelerometerSubscription = userAccelerometerEvents.listen((event) {
-      final double shakeThreshold = 15;
-      if (event.x.abs() > shakeThreshold ||
-          event.y.abs() > shakeThreshold ||
-          event.z.abs() > shakeThreshold) {
-        _changeBackgroundColor();
-      }
+    _accelerometerHandler = AccelerometerHandler(onShake: (color) {
+      setState(() {
+        _backgroundColor = color;
+      });
     });
   }
 
   @override
   void dispose() {
-    _accelerometerSubscription?.cancel();
+    _accelerometerHandler?.dispose();
     super.dispose();
-  }
-
-  void _changeBackgroundColor() {
-    setState(() {
-      _backgroundColor = Color(Random().nextInt(0xFFFFFFFF));
-    });
   }
 
   @override
@@ -101,7 +86,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         home: checking
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : userFound
                 ? const HomeScreen()
                 : AuthWrapper(),

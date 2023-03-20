@@ -4,7 +4,6 @@ import '../Models/Movie/movie_details_model.dart';
 import '../Models/Movie/movie_model.dart';
 import '../Models/Movie/trailer_model.dart';
 import '../Models/genres_model.dart';
-import '../Models/reviews_model.dart';
 
 class HttpRequest {
   static final String? tmdbAccessToken = dotenv.env['TMDB_ACCESS_TOKEN'];
@@ -30,22 +29,7 @@ class HttpRequest {
     }
   }
 
-  static Future<ReviewsModel> getReviews(String shows, int id) async {
-    try {
-      Response response = await dio.get(
-        mainUrl + "/$shows/$id/reviews",
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $tmdbAccessToken',
-          },
-        ),
-      );
-      return ReviewsModel.fromJson(response.data);
-    } catch (error) {
-      return ReviewsModel.withError("$error");
-    }
-  }
-
+ 
   static Future<TrailersModel> getTrailers(String shows, int id) async {
     try {
       Response response = await dio.get(

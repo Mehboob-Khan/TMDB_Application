@@ -30,6 +30,7 @@ class _GenreListState extends State<GenreList>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 310,
